@@ -1,11 +1,10 @@
 #!/bin/bash
 
-ln -sf $PWD/mybashrc $HOME/.mybashrc
+ln -sf $PWD/bashrc $HOME/.mybashrc
 ln -sf $PWD/bash_aliases $HOME/.bash_aliases
+ln -sf $PWD/bash_functions $HOME/.bash_functions
 
 ln -sf $PWD/vs $HOME/bin
-ln -sf $PWD/startprj $HOME/bin
-
 
 # installing include in .bashrc
 cat >> ~/.bashrc <<EOF

@@ -8,6 +8,12 @@ function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
 }
 
+function vs() {
+    TARGET=${1:-"."}
+    du -h -d 1 $TARGET | egrep ^[[:digit:][:punct:]]+K | sort -n
+    du -h -d 1 $TARGET | egrep ^[[:digit:][:punct:]]+M | sort -n
+    du -h -d 1 $TARGET | egrep ^[[:digit:][:punct:]]+G | sort -n
+}
 
 function cup() {
      find -name '*~' -delete
