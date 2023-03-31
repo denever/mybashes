@@ -1,1 +1,1 @@
-My bash configurations and tricks
+My bash configurations and tricks to customize my working env
