@@ -1,0 +1,19 @@
+[alias]
+        tree = log --graph --decorate --pretty=oneline --abbrev-commit
+        brin = "!f(){ current_branch=$(git rev-parse --abbrev-ref HEAD); git commit --allow-empty -m \"Init commit for branch: $current_branch\"; }; f"
+        brup = "!f(){ current_branch=$(git rev-parse --abbrev-ref HEAD); git fetch --prune; git reset --hard origin/$current_branch; }; f"
+        rebon = "!f(){ git fetch; git rebase --keep-empty -i origin/$1; }; f"
+        lain = "!f(){ git fetch; git reflog | grep 'commit: Init commit for branch:'; }; f"
+        rc = "!f(){ git rebase --continue; }; f"
+        ra = "!f(){ git rebase --abort; }; f"
+        ca = "!f(){ git commit --amend; }; f"
+        co = "!f(){ git checkout \"$1\"; }; f"
+        cm = "!f(){ git commit -m \"$1\"; }; f"
+        cp = "!f(){ git cherry-pick \"$1\"; }; f"
+        fxp = "!f(){ git commit -m \"[WIP][FIXUP] $1 \"; }; f"
+        wip = "!f(){ git commit -m \"[WIP] $1 \"; }; f"
+        dc = diff --cached
+        ds = diff --stat
+        last = log -1 HEAD
+        publish-tag = "!f(){ git tag -a v\"$1\" -m 'version '\"$1\" && git push origin --tags; }; f"
+        stale-branches = "!f(){ git remote prune origin && git branch --merged master | egrep -v \"^\\*|\bmaster\\b|\\bdev\\b\"; }; f"
