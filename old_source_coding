@@ -1,0 +1,18 @@
+# git status on command line
+function parse_git_dirty {
+  LANG=C
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo "*"
+}
+
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+
+export PS1='\[\033[1;33m\]\w\[\033[0m\]$ $(parse_git_branch) '
+
+# # conda
+eval "$(/home/denever/miniconda3/bin/conda shell.bash hook)"
+
+source /home/denever/bin/mybashes/git-completion.bash
+
+# setxkbmap -model pc105 -layout it -variant code -option lv3:ralt_switch -option ctrl:nocaps -option grp:shifts_toggle -option grp_led:caps -option altwin:left_meta_win
