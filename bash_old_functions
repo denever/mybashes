@@ -1,0 +1,48 @@
+function workon() {
+    known_env=$(conda info --envs | awk '/^[^#]/ {print $1}' | grep "$1")
+    known_path=$(find /home/denever/workvir/ -maxdepth 1 -type d | grep "$1")
+    echo "Known env: $known_env"
+    echo "Known path: $known_path"
+    if [ -z "$known_env" ]; then
+        echo "Unknown env: $1"
+        return 1;
+    fi
+    if [ -z "$known_path" ]; then
+        echo "Unknown workdir: $1"
+        return 2;
+    fi
+    cd ~/workvir/$1
+    conda activate $1
+}
+
+function myw() {
+    known_env=$(conda info --envs | awk '/^[^#]/ {print $1}' | grep "$1")
+    known_path=$(find /home/denever/myworks/ -maxdepth 1 -type d | grep "$1")
+    if [ -z "$known_env" ]; then
+        echo "Unknown env: $1"
+        return 1;
+    fi
+    if [ -z "$known_path" ]; then
+        echo "Unknown myworks: $1"
+        return 2;
+    fi
+    cd ~/myworks/$1
+    conda activate $1
+}
+
+function check_vars() {
+    if [ -z "$1" ]; then
+        echo "Missing var file: $1"
+        return 1
+    fi
+    if [ -z "$2" ]; then
+        echo "Missing output file"
+        return 2
+    fi
+    rm -f $2
+    for VAR in $(awk -F: '/^[a-z_]+:/ {print $1}' $1 | xargs);
+    do
+        echo "$(ag -l --numbers $VAR | wc -l): $VAR" >> $2
+        echo >> $2
+    done
+}
